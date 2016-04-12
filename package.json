@@ -1,0 +1,17 @@
+{
+  "name": "pmm-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "httpdispatcher": "^1.0.0",
+    "sqlite3": "^3.1.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Tyler St. Onge",
+  "license": "ISC"
+}
