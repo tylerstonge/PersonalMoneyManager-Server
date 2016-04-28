@@ -120,6 +120,17 @@ dispatcher.onPost("/gimme/totalratio", function(req, res) {
 	});
 });
 
+/**
+ * Accept user input and store it in database
+ */
+dispatcher.onPost("/update/totalratio", function(req, res) {
+	db.serialize(function() {
+		db.all("INSERT OR REPLACE INTO users (id, userid, totalratio) VALUES ((SELECT id FROM users WHERE userid=?), ?, ?)", totalratio, userid);
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		res.end("");
+	});
+});
+
 var server = http.createServer(handleRequest);
 server.listen(PORT, function() {
 	console.log("server listening on: http://localhost:%s", PORT);
