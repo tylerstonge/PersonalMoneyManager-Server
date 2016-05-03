@@ -54,7 +54,7 @@ dispatcher.onGet("/", function(req, res) {
 dispatcher.onPost("/", function(req, res) {
 	// get the data passed from request
 	var data = JSON.parse(req.body);
-
+	
 	// assure all required fields are set and valid
 	if (data.userid != null && data.totalratio != null) {
 		console.log("userid:" + data.userid + ";totalratio:" + data.totalratio); 
@@ -119,6 +119,18 @@ dispatcher.onPost("/gimme/totalratio", function(req, res) {
 			res.writeHead(200, {'Content-Type': 'application/json'});
 			res.end(JSON.stringify(data));
 		});
+	});
+});
+
+/**
+ * Accept user input and store it in database
+ */
+dispatcher.onPost("/update/totalratio", function(req, res) {
+	var data = JSON.parseBody(req.body);
+	db.serialize(function() {
+		db.all("INSERT OR REPLACE INTO users (id, userid, totalratio) VALUES ((SELECT id FROM users WHERE userid=?), ?, ?)", data.userid, data.userid, data.totalratio);
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		res.end("");
 	});
 });
 
