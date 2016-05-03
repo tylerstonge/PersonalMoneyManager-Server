@@ -86,10 +86,12 @@ dispatcher.onPost("/newuser", function(req, res) {
 		db.all("SELECT userid FROM users", function(err, rows) {
 			res.writeHead(200, {'Content-Type': 'application/json'});
 			var userid = generateId();
-			for (var i = 0; i < rows.length; i++) {
-				if (rows[i].userid == userid) {
-					res.end(JSON.stringify({"userid": null}));
-					return;
+			if (rows != null) {
+				for (var i = 0; i < rows.length; i++) {
+					if (rows[i].userid == userid) {
+						res.end(JSON.stringify({"userid": null}));
+						return;
+					}	
 				}	
 			}
 			res.end(JSON.stringify({"userid": userid}));
