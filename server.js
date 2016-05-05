@@ -126,7 +126,7 @@ dispatcher.onPost("/gimme/totalratio", function(req, res) {
  * Accept user input and store it in database
  */
 dispatcher.onPost("/update/totalratio", function(req, res) {
-	var data = JSON.parseBody(req.body);
+	var data = JSON.parse(req.body);
 	db.serialize(function() {
 		db.all("INSERT OR REPLACE INTO users (id, userid, totalratio) VALUES ((SELECT id FROM users WHERE userid=?), ?, ?)", data.userid, data.userid, data.totalratio);
 		res.writeHead(200, {'Content-Type': 'application/json'});
